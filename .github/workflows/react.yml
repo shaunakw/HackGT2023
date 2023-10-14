@@ -1,4 +1,4 @@
-name: Reat Build & Deploy
+name: reat-build-deploy
 
 permissions:
   contents: write
