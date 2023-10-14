@@ -88,6 +88,7 @@ class _UserItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           name,
+          power,
         ],
       ),
     );
@@ -96,8 +97,26 @@ class _UserItem extends StatelessWidget {
   // Return the user name.
   Widget get name {
     return Text(
-      '${user.name}',
+      user.name,
       style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget get power {
+    int power = 0;
+    for (var i in user.devices) {
+      Map<String, Object?> device = i as Map<String, Object?>;
+      try {
+        List<int> powerList = (device['power'] as List<dynamic>).map((item) => item as int).toList();
+        power += powerList.last;
+      } catch (e) {
+        print('Power Array Empty for: ${user.name}');
+      }
+    }
+
+    return Text(
+      'Active Power Consumption: ${power.toString()}',
+      style: const TextStyle(fontSize: 12),
     );
   }
 

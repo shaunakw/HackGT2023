@@ -89,7 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           {
             'id': deviceHash,
             'name': device.platformName,
-            'power': 0
+            'power': []
           }
         ])
       });

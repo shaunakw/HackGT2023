@@ -4,6 +4,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import '../firebase_options.dart';
@@ -19,7 +20,7 @@ final _db = FirebaseFirestore.instance;
 /// We are using `withConverter` to ensure that interactions with the collection
 /// are type-safe.
 final _homesRef = _db.collection('homes').withConverter<_Home>(
-      fromFirestore: (snapshots, _) => _Home.fromJson(snapshots.data()!),
+      fromFirestore: (snapshots, _) => _Home.fromJson(snapshots.data()!, snapshots.id),
       toFirestore: (home, _) => home.toJson(),
     );
 
@@ -65,6 +66,29 @@ class _HomeListState extends State<HomeList> {
   }
 }
 
+Future<void> updateHome(_Home home) async {
+  String userUID = FirebaseAuth.instance.currentUser!.uid;
+
+  var userSnapshot = await _db.collection('users').doc(userUID).get();
+  String userHome = userSnapshot.get('home') as String;
+
+  await _db.collection('users').doc(userUID).update({
+    'home': home.id,
+  });
+
+  await _db.collection('homes').doc(userHome).update({
+    'users': FieldValue.arrayRemove([
+      userUID
+    ])
+  }).onError((error, stackTrace) => null);
+
+  await _db.collection('homes').doc(home.id).update({
+    'users': FieldValue.arrayUnion([
+      userUID
+    ])
+  });
+}
+
 /// A single movie row.
 class _HomeItem extends StatelessWidget {
   _HomeItem(this.home, this.reference);
@@ -101,15 +125,26 @@ class _HomeItem extends StatelessWidget {
     );
   }
 
+  Widget updateHomeButton(BuildContext context, _Home home) {
+    return FloatingActionButton(
+      onPressed: () async {
+        await updateHome(home);
+      },
+      child: const Text("SELECT"),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4, top: 4),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           pfp,
           Flexible(child: details),
+          updateHomeButton(context, home),
         ],
       ),
     );
@@ -118,22 +153,20 @@ class _HomeItem extends StatelessWidget {
 
 @immutable
 class _Home {
-  _Home({
-    required this.pfp,
-    required this.users,
-    required this.name,
-  });
+  _Home({required this.pfp, required this.users, required this.name, required this.id});
 
-  _Home.fromJson(Map<String, Object?> json)
+  _Home.fromJson(Map<String, Object?> json, String id)
       : this(
           pfp: json['pfp']! as String,
           users: json['users']! as List<dynamic>,
           name: json['name']! as String,
+          id: id,
         );
 
   final String pfp;
   final List<dynamic> users;
   final String name;
+  final String id;
 
   Map<String, Object?> toJson() {
     return {
