@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'homescreen.dart';
-
-final db = FirebaseFirestore.instance;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -52,20 +49,6 @@ class MyHomePage extends StatelessWidget {
   void _signInWithGitHub() async {
     GithubAuthProvider githubProvider = GithubAuthProvider();
     await FirebaseAuth.instance.signInWithProvider(githubProvider);
-    if (FirebaseAuth.instance.currentUser != null) {
-      var userUID = await db.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).get();
-      if (!userUID.exists) {
-        await db.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).set(
-          {
-            'devices': [],
-            'friends': [],
-            'home': "",
-            'name': FirebaseAuth.instance.currentUser?.displayName,
-            'pfp': 'https://m.media-amazon.com/images/I/612-e1vHBAL._AC_SL1145_.jpg'
-          },
-        );
-      }
-    }
   }
 
   @override
