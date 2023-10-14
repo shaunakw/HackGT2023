@@ -1,4 +1,4 @@
-name: Reat Build & Deploy
+name: react-build-deploy
 
 permissions:
   contents: write
