@@ -19,7 +19,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserData(await getUserData(user));
+        setUserData(await getUserData(user.uid));
       } else {
         setUserData(undefined);
       }
@@ -45,7 +45,7 @@ function App() {
     >
       {!loading ? (
         user ? (
-          <UserHome user={user} userData={userData!} />
+          <UserHome userData={userData!} />
         ) : (
           <>
             <Box
@@ -66,7 +66,7 @@ function App() {
             <div
               className="type"
               style={{
-                fontFamily: "Roboto",
+                fontFamily: "Young Serif",
                 fontWeight: 400,
               }}
             >
