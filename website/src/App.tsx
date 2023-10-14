@@ -4,7 +4,7 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import Typewriter from "typewriter-effect";
 import UserHome from "./components/UserHome";
 import Dots from "./components/Dots";
-import { auth, getUserData, githubProvider } from "./firebase";
+import { auth, getCurrentUserData, githubProvider } from "./firebase";
 import { UserData } from "./types";
 import "./App.css";
 
@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserData(await getUserData(user.uid));
+        setUserData(await getCurrentUserData(user));
       } else {
         setUserData(undefined);
       }

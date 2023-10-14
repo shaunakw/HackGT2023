@@ -1,7 +1,17 @@
 import { initializeApp } from "firebase/app";
-import { GithubAuthProvider, getAuth } from "firebase/auth";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
-import { UserData } from "./types";
+import { GithubAuthProvider, User, getAuth } from "firebase/auth";
+import {
+  collection,
+  doc,
+  documentId,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+import { Home, UserData } from "./types";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAEZWnInWLWU5yqG7Y1NyKkQSon_RRxWNY",
@@ -19,13 +29,30 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export async function getUserData(uid: string) {
-  const docRef = doc(db, "users", uid);
+export async function getMultipleUserData(uids: string[]): Promise<UserData[]> {
+  const q = query(collection(db, "users"), where(documentId(), "in", uids));
+  const querySnap = await getDocs(q);
+  return querySnap.docs.map((doc) => doc.data() as UserData);
+}
+
+export async function getCurrentUserData(user: User): Promise<UserData> {
+  const docRef = doc(db, "users", user.uid);
   const docSnap = await getDoc(docRef);
   if (!docSnap.exists()) {
     await setDoc(docRef, {});
-    return {};
+    return { name: user.displayName ?? undefined };
   }
 
   return docSnap.data() as UserData;
+}
+
+export async function getAllHomes(): Promise<Home[]> {
+  const querySnap = await getDocs(collection(db, "homes"));
+  return querySnap.docs.map((doc) => doc.data() as Home);
+}
+
+export async function getHome(id: string): Promise<Home> {
+  const docRef = doc(db, "homes", id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data() as Home;
 }
