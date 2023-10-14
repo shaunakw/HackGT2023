@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.17.0
   firebase_auth: ^4.10.1
+  flutter_blue_plus: ^1.18.3
 
 dev_dependencies:
   flutter_test:
@@ -91,8 +92,6 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 flutter_launcher_icons:
-  android: "launcher_icon"
   ios: true
-  image_path_android: "assets/icon/icon.png"
-  image_path_ios: "assets/icon/icon.png"
+  image_path_ios: "assets/icon/ios_square.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
