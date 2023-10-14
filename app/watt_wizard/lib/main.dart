@@ -16,6 +16,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // if (Platform.isAndroid) {
+    //   await FlutterBluePlus.turnOn();
+    // }
+
     return MaterialApp(
       title: 'Watt Wizard',
       theme: ThemeData(
@@ -29,14 +33,13 @@ class MyApp extends StatelessWidget {
 
 Widget _landingPage() {
   return StreamBuilder<User?>(
-    stream: FirebaseAuth.instance.authStateChanges(), 
-    builder: (BuildContext context, snapshot) {
-      if(snapshot.hasData) {
-        return const HomeScreen();
-      }
-      return const MyHomePage(title: 'Sign in to Watt Wizard');
-    }
-  );
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasData) {
+          return const HomeScreen();
+        }
+        return const MyHomePage(title: 'Sign in to Watt Wizard');
+      });
 }
 
 class MyHomePage extends StatelessWidget {
