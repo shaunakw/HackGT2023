@@ -1,19 +1,14 @@
-import { useEffect, useState } from "react";
-import * as db from "./db";
+import { signInWithRedirect, signOut } from "firebase/auth";
+import { auth, githubProvider } from "./firebase";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    db.init().then(() => {
-      setLoading(false);
-    });
-  }, []);
-
   return (
     <div>
       <p>Hello</p>
-      <p>{loading ? "Loading" : "Not loading"}</p>
+      <button onClick={() => signInWithRedirect(auth, githubProvider)}>
+        Sign in
+      </button>
+      <button onClick={() => signOut(auth)}>Sign out</button>
     </div>
   );
 }
