@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typewriter from "typewriter-effect";
 import { UserData } from "./types";
+import UserHome from "./components/UserHome";
 import "./App.css";
 import { CircularProgress, Typography } from "@mui/material";
 
@@ -44,7 +45,7 @@ function App() {
     >
       {!loading ? (
         user ? (
-          <p>user home</p>
+          <UserHome user={user} userData={userData!} />
         ) : (
           <>
             <Box
