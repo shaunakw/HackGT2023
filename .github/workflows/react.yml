@@ -28,7 +28,7 @@ jobs:
       shell: bash
     - run : git config user.email github-actions@github.com
       shell: bash
-    - run : cd ./website && git --work-tree build add --all
+    - run : cd ./website && git --work-tree dist add --all
       shell: bash
     - run : git commit -m "Automatic Build and Deploy run by GitHub Actions"
       shell: bash
