@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:watt_wizard/device_connection_card.dart';
+import 'package:watt_wizard/widgets/connected_device_tile.dart';
+import 'package:watt_wizard/widgets/scan_result_tile.dart';
+import 'package:watt_wizard/utils/extra.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.username});
@@ -25,7 +27,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
 
     FlutterBluePlus.connectedSystemDevices.then((devices) {
-      _connectedDevices = devices;
+      List<BluetoothDevice> device = [];
+      for (BluetoothDevice d in devices) {
+        if (d.platformName == "Light Control") {
+          device.add(d);
+        }
+      }
+      _connectedDevices = device;
       setState(() {});
     });
 
@@ -62,6 +70,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     FlutterBluePlus.stopScan();
   }
 
+  void onConnectPressed(BluetoothDevice device) {
+    device.connectAndUpdateStream();
+    _connectedDevices.add(device);
+    setState(() {});
+  }
+
   Future onRefresh() {
     if (_isScanning == false) {
       FlutterBluePlus.startScan(timeout: const Duration(seconds: 15));
@@ -70,11 +84,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Future.delayed(const Duration(milliseconds: 500));
   }
 
+  List<Widget> _buildConnectedDeviceTiles(BuildContext context) {
+    return _connectedDevices
+        .map(
+          (d) => ConnectedDeviceTile(
+            device: d,
+            onConnect: () => onConnectPressed(d),
+          ),
+        )
+        .toList();
+  }
+
   List<Widget> _buildScanResultTiles(BuildContext context) {
     return _scanResults
         .map(
-          (r) => Text(
-            r.device.platformName,
+          (r) => ScanResultTile(
+            result: r,
+            onTap: () {
+              _scanResults.remove(r);
+              onConnectPressed(r.device);
+            },
           ),
         )
         .toList();
@@ -110,6 +139,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         onRefresh: onRefresh,
         child: ListView(
           children: <Widget>[
+            const Text("Connected Devices"),
+            ..._buildConnectedDeviceTiles(context),
+            const Text("Scanned Devices:"),
             ..._buildScanResultTiles(context),
           ],
         ),
