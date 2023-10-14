@@ -1,16 +1,12 @@
 import { User, onAuthStateChanged, signInWithRedirect } from "firebase/auth";
-import { auth, getUserData, githubProvider } from "./firebase";
 import { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import Typewriter from "typewriter-effect";
-import { UserData } from "./types";
 import UserHome from "./components/UserHome";
+import Dots from "./components/Dots";
+import { auth, getUserData, githubProvider } from "./firebase";
+import { UserData } from "./types";
 import "./App.css";
-import { CircularProgress, Container, Typography } from "@mui/material";
-import { tsParticles } from "tsparticles-engine";
-import { loadPolygonPath } from "tsparticles-path-polygon";
-import Dots from "./components/Dots"; // Import Dots component
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -19,8 +15,7 @@ function App() {
 
   const [titleDone, setTitleDone] = useState(false);
 
-  async function init() {
-    await loadPolygonPath(tsParticles);
+  useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUserData(await getUserData(user.uid));
@@ -31,17 +26,11 @@ function App() {
       setUser(user);
       setLoading(false);
     });
-  }
-
-  useEffect(() => {
-    init();
   }, []);
 
   return (
     <>
-      <div>
-        <Dots />
-      </div>
+      {!loading && !user && <Dots />}
       <Box
         display="flex"
         justifyContent="center"
@@ -50,7 +39,7 @@ function App() {
         flexDirection="column"
         gap={2}
         sx={{
-          //background: "#2c3e50",
+          background: loading || user ? "#2c3e50" : undefined,
           position: "relative",
           overflow: "hidden",
         }}
