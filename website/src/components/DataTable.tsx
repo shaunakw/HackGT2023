@@ -17,7 +17,7 @@ function DataTable(props: IProps) {
     <>
       <Box display="flex" justifyContent="space-between" px={2} py={1}>
         <Typography color="white">{props.title}</Typography>
-        <Typography color="white">Last Power Output</Typography>
+        <Typography color="white">Power Consumption (W)</Typography>
       </Box>
       {data.map((d, i) => (
         <Box

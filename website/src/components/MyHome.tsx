@@ -30,7 +30,6 @@ function MyHome(props: IProps) {
           );
           return [userData.name, power] as [string, number[]];
         });
-      console.log(data);
       setName(home.name);
       setData(data);
       setLoading(false);
@@ -50,7 +49,7 @@ function MyHome(props: IProps) {
         <DataTable title="Name" data={data} />
       </>
     ) : (
-      <CircularProgress />
+      <CircularProgress sx={{ color: "white" }} />
     )
   ) : (
     <>
