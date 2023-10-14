@@ -3,6 +3,7 @@ import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { auth } from "../firebase";
 import { UserData } from "../types";
 import Devices from "./Devices";
+import MyHome from "./MyHome";
 
 interface IProps {
   userData: UserData;
@@ -45,9 +46,7 @@ function UserHome(props: IProps) {
               borderRadius: 10,
             }}
           >
-            <Typography variant="h5" color="white" p={2}>
-              My Home
-            </Typography>
+            <MyHome {...props} />
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>

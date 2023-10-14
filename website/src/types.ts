@@ -8,7 +8,7 @@ export interface UserData {
 
 export interface Device {
   name: string;
-  power: number[];
+  power?: number[];
 }
 
 export interface Home {
