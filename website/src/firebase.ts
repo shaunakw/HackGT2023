@@ -40,7 +40,10 @@ export async function getCurrentUserData(user: User): Promise<UserData> {
   const docSnap = await getDoc(docRef);
   if (!docSnap.exists()) {
     await setDoc(docRef, {});
-    return { name: user.displayName ?? undefined };
+    return {
+      name: user.displayName ?? "Anonymous",
+      pfp: "https://m.media-amazon.com/images/I/612-e1vHBAL._AC_SL1145_.jpg",
+    };
   }
 
   return docSnap.data() as UserData;
