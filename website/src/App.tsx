@@ -4,20 +4,27 @@ import {
   signInWithRedirect,
   signOut,
 } from "firebase/auth";
-import { auth, githubProvider } from "./firebase";
+import { auth, getUserData, githubProvider } from "./firebase";
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import { UserData } from "./types";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<UserData>();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      setLoading(false);
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setUserData(await getUserData(user));
+      } else {
+        setUserData(undefined);
+      }
+
       setUser(user);
-      console.log(user);
+      setLoading(false);
     });
   }, []);
 
