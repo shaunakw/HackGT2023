@@ -1,4 +1,9 @@
-import { User, onAuthStateChanged, signInWithRedirect } from "firebase/auth";
+import {
+  User,
+  onAuthStateChanged,
+  signInWithRedirect,
+  signOut,
+} from "firebase/auth";
 import { auth, getUserData, githubProvider } from "./firebase";
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
@@ -38,7 +43,10 @@ function App() {
       flexDirection="column"
       gap={2}
       sx={{
-        background: "linear-gradient(-135deg, #09203F 30%, #537895 90%)",
+        background:
+          loading || user
+            ? "#09203F"
+            : "linear-gradient(-135deg, #09203F 30%, #537895 90%)",
         position: "relative",
         overflow: "hidden",
       }}
