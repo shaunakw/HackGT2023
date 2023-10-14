@@ -1,5 +1,10 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:watt_wizard/profile.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,6 +15,9 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late User user;
+  BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
+  late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
+
   @override
   void initState() {
     user = FirebaseAuth.instance.currentUser!;
@@ -20,9 +28,21 @@ class _HomeScreenState extends State<HomeScreen> {
           user = event;
         });
       }
+
+      _adapterStateStateSubscription =
+          FlutterBluePlus.adapterState.listen((state) {
+        _adapterState = state;
+        setState(() {});
+      });
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _adapterStateStateSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -39,8 +59,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
         ),
         title: const Text("Home Screen"),
-        actions: const <Widget>[
-          IconButton(onPressed: null, icon: Icon(Icons.account_circle)),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          ProfileScreen(username: user.displayName!)),
+                );
+              },
+              icon: const Icon(Icons.account_circle)),
         ],
       ),
       body: Center(
@@ -50,6 +79,16 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             "Welcome ${user.displayName}",
           ),
+          _adapterState == BluetoothAdapterState.on
+              ? const Spacer()
+              : FilledButton(
+                  onPressed: () async {
+                    if (Platform.isAndroid) {
+                      await FlutterBluePlus.turnOn();
+                    } else {}
+                  },
+                  child: const Text("Turn Bluetooth On"),
+                )
         ],
       )),
     );
