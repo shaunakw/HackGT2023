@@ -38,10 +38,6 @@ dependencies:
   firebase_core: ^2.17.0
   firebase_auth: ^4.10.1
   flutter_blue_plus: ^1.18.3
-<<<<<<< HEAD
-  cloud_firestore: ^4.9.3
-=======
->>>>>>> Added functionality for scanning for Bluetooth devices. Specifically lists only Light Control bluetooth devices
 
 dev_dependencies:
   flutter_test:
