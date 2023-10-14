@@ -1,10 +1,14 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:watt_wizard/widgets/connected_device_tile.dart';
 import 'package:watt_wizard/widgets/scan_result_tile.dart';
 import 'package:watt_wizard/utils/extra.dart';
+
+final db = FirebaseFirestore.instance;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, required this.username});
@@ -40,8 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _scanResultsSubscription = FlutterBluePlus.scanResults.listen((results) {
       List<ScanResult> result = [];
       for (ScanResult r in results) {
-        if (r.device.platformName == "Light Control" &&
-            !_connectedDevices.contains(r.device)) {
+        if (r.device.platformName == "Light Control" && !_connectedDevices.contains(r.device)) {
           result.add(r);
         }
       }
@@ -71,9 +74,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     FlutterBluePlus.stopScan();
   }
 
-  void onConnectPressed(BluetoothDevice device) {
+  void onConnectPressed(BluetoothDevice device) async {
     device.connectAndUpdateStream();
     _connectedDevices.add(device);
+
+    var userDoc = await db.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).get();
+    List<dynamic> devices = await userDoc.get('devices');
+
+    int deviceHash = device.hashCode;
+
+    if (!devices.any((element) => element['id'] == deviceHash)) {
+      await db.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).update({
+        'devices': FieldValue.arrayUnion([
+          {
+            'id': deviceHash,
+            'name': device.platformName,
+            'power': []
+          }
+        ])
+      });
+    }
+
     setState(() {});
   }
 
@@ -119,8 +140,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: const Icon(Icons.stop),
       );
     } else {
-      return FloatingActionButton(
-          onPressed: onScanPressed, child: const Text("SCAN"));
+      return FloatingActionButton(onPressed: onScanPressed, child: const Text("SCAN"));
     }
   }
 
