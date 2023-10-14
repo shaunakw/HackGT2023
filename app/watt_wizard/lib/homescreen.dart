@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:watt_wizard/profile.dart';
 
-import 'leaderboard.dart';
+import 'widgets/users_leaderboard.dart';
+import 'widgets/homes_leaderboard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -113,7 +114,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             } else {}
                           },
                           child: const Text("Turn Bluetooth On"),
-                        )
+                        ),
+                  // Center(
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: <Widget>[
+                  //       SizedBox(
+                  //         width: sizedBoxWidth,
+                  //         height: sizedBoxHeight,
+                  //         child: UserList(),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -129,7 +142,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const Center(child: Text("hello"))
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    width: sizedBoxWidth,
+                    height: sizedBoxHeight,
+                    child: HomeList(),
+                  )
+                ],
+              ),
+            ),
           ],
         ),
       ),
