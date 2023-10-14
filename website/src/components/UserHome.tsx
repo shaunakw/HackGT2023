@@ -1,12 +1,5 @@
 import { signOut } from "firebase/auth";
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { auth } from "../firebase";
 import { UserData } from "../types";
 import Devices from "./Devices";
@@ -38,11 +31,9 @@ function UserHome(props: IProps) {
               borderRadius: 10,
             }}
           >
-            <CardContent>
-              <Typography variant="h5" color="white">
-                Leaderboard
-              </Typography>
-            </CardContent>
+            <Typography variant="h5" color="white" p={2}>
+              Leaderboard
+            </Typography>
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>
@@ -54,11 +45,9 @@ function UserHome(props: IProps) {
               borderRadius: 10,
             }}
           >
-            <CardContent>
-              <Typography variant="h5" color="white">
-                My Home
-              </Typography>
-            </CardContent>
+            <Typography variant="h5" color="white" p={2}>
+              My Home
+            </Typography>
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>
@@ -70,12 +59,7 @@ function UserHome(props: IProps) {
               borderRadius: 10,
             }}
           >
-            <CardContent>
-              <Typography variant="h5" color="white">
-                My Devices
-              </Typography>
-              <Devices {...props} />
-            </CardContent>
+            <Devices {...props} />
           </Card>
         </Grid>
       </Grid>
