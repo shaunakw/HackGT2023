@@ -41,7 +41,7 @@ function Leaderboard() {
 
   return !loading ? (
     <>
-      <Typography variant="h5" color="white" p={2}>
+      <Typography variant="h5" p={2}>
         Leaderboard
       </Typography>
       <DataTable title="Home" data={data} />
