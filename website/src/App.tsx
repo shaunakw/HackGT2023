@@ -39,7 +39,7 @@ function App() {
         flexDirection="column"
         gap={2}
         sx={{
-          background: loading || user ? "#0abde3" : undefined,
+          background: loading || user ? "#0abde3" : undefined, // 191
           position: "relative",
           overflow: "hidden",
         }}
@@ -51,15 +51,23 @@ function App() {
             <>
               <Box
                 display="flex"
+                justifyContent="space-between"
+                alignItems="start"
                 position="absolute"
                 top={0}
-                right={0}
-                px={4}
-                py={2}
+                left={0}
+                width="100%"
+                boxSizing="border-box"
+                p={2}
               >
+                <img src="/favicon.png" alt="logo" width={44} height={44} />
                 <Button
                   variant="outlined"
-                  style={{ color: "white", border: "1px solid white" }}
+                  style={{
+                    color: "white",
+                    border: "1px solid white",
+                    marginRight: 16,
+                  }}
                   onClick={() => signInWithRedirect(auth, githubProvider)}
                 >
                   Sign In
