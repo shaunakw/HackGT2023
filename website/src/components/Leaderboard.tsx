@@ -25,10 +25,12 @@ function Leaderboard() {
               data.devices![0].power!.map(() => 0)
             )
           );
-        const sumArray = dataArray.reduce((power, user) =>
-          power.map((p, i) => p + user[i])
-        );
-        data.push([home.name, sumArray]);
+        if (dataArray.length) {
+          const sumArray = dataArray.reduce((power, user) =>
+            power.map((p, i) => p + user[i])
+          );
+          data.push([home.name, sumArray]);
+        }
       }
     }
     setData(data);
