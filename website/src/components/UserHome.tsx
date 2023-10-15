@@ -3,6 +3,8 @@ import { Box, Button, Card, Grid, Typography } from "@mui/material";
 import { auth } from "../firebase";
 import { UserData } from "../types";
 import Devices from "./Devices";
+import MyHome from "./MyHome";
+import Leaderboard from "./Leaderboard";
 
 interface IProps {
   userData: UserData;
@@ -27,13 +29,11 @@ function UserHome(props: IProps) {
             elevation={8}
             style={{
               height: "100%",
-              backgroundColor: "#253544",
+              backgroundColor: "whitesmoke",
               borderRadius: 10,
             }}
           >
-            <Typography variant="h5" color="white" p={2}>
-              Leaderboard
-            </Typography>
+            <Leaderboard />
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>
@@ -41,13 +41,11 @@ function UserHome(props: IProps) {
             elevation={8}
             style={{
               height: "100%",
-              backgroundColor: "#253544",
+              backgroundColor: "whitesmoke",
               borderRadius: 10,
             }}
           >
-            <Typography variant="h5" color="white" p={2}>
-              My Home
-            </Typography>
+            <MyHome {...props} />
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>
@@ -55,7 +53,7 @@ function UserHome(props: IProps) {
             elevation={8}
             style={{
               height: "100%",
-              backgroundColor: "#253544",
+              backgroundColor: "whitesmoke",
               borderRadius: 10,
             }}
           >

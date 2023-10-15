@@ -28,7 +28,7 @@ const Dots: React.FC = () => {
       options={{
         background: {
           color: {
-            value: "#2c3e50",
+            value: "#0abde3",
           },
         },
         fpsLimit: 120,

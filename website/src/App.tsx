@@ -4,7 +4,7 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import Typewriter from "typewriter-effect";
 import UserHome from "./components/UserHome";
 import Dots from "./components/Dots";
-import { auth, getUserData, githubProvider } from "./firebase";
+import { auth, getCurrentUserData, githubProvider } from "./firebase";
 import { UserData } from "./types";
 import "./App.css";
 
@@ -18,7 +18,7 @@ function App() {
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUserData(await getUserData(user.uid));
+        setUserData(await getCurrentUserData(user));
       } else {
         setUserData(undefined);
       }
@@ -39,7 +39,7 @@ function App() {
         flexDirection="column"
         gap={2}
         sx={{
-          background: loading || user ? "#2c3e50" : undefined,
+          background: loading || user ? "#0abde3" : undefined,
           position: "relative",
           overflow: "hidden",
         }}
@@ -93,7 +93,7 @@ function App() {
                 Compete with your friends to save the most energy!
               </Typography>
               <Button
-                style={{ color: "lightgrey" }}
+                style={{ color: "white" }}
                 variant="outlined"
                 onClick={() =>
                   window.open(
