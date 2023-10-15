@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useMemo } from "react";
+import DataTableEntry from "./DataTableEntry";
 
 interface IProps {
   title: string;
@@ -20,19 +21,12 @@ function DataTable(props: IProps) {
         <Typography color="white">Power Consumption (W)</Typography>
       </Box>
       {data.map((d, i) => (
-        <Box
+        <DataTableEntry
           key={i}
-          display="flex"
-          justifyContent="space-between"
-          px={2}
-          py={1}
-          sx={{
-            background: i % 2 === 1 ? "#253544" : "#2a3b4c",
-          }}
-        >
-          <Typography color="white">{d[0]}</Typography>
-          <Typography color="white">{d[1][d[1].length - 1]}</Typography>
-        </Box>
+          name={d[0]}
+          values={d[1]}
+          color={i % 2 === 1 ? "#253544" : "#2a3b4c"}
+        />
       ))}
     </>
   );
