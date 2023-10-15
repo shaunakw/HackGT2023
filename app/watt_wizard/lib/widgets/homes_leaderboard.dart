@@ -24,6 +24,14 @@ final _homesRef = _db.collection('homes').withConverter<_Home>(
       toFirestore: (home, _) => home.toJson(),
     );
 
+void makeNewHome(String name) async {
+  await _db.collection('homes').add({
+    'name': name.substring(0, 30 > name.length ? name.length : 50),
+    'pfp': "https://housing.gatech.edu/sites/default/files/styles/building_hero_/public/2022-04/building-at-night.jpeg.jpg",
+    'users': []
+  });
+}
+
 /// Holds all example app films
 class HomeList extends StatefulWidget {
   const HomeList({Key? key}) : super(key: key);
@@ -98,9 +106,14 @@ class _HomeItem extends StatelessWidget {
 
   /// Returns the movie poster.
   Widget get pfp {
-    return SizedBox(
-      width: 100,
-      child: Image.network(home.pfp),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        home.pfp,
+        width: 50,
+        height: 50,
+        fit: BoxFit.cover,
+      ),
     );
   }
 
@@ -120,8 +133,12 @@ class _HomeItem extends StatelessWidget {
   // Return the home name.
   Widget get name {
     return Text(
-      '${home.name}',
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      home.name,
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Color(0xfff5f5f5),
+      ),
     );
   }
 
@@ -137,15 +154,11 @@ class _HomeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4, top: 4),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          pfp,
-          Flexible(child: details),
-          updateHomeButton(context, home),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: pfp,
+        title: Text(home.name),
+        trailing: updateHomeButton(context, home)
       ),
     );
   }
@@ -153,7 +166,12 @@ class _HomeItem extends StatelessWidget {
 
 @immutable
 class _Home {
-  _Home({required this.pfp, required this.users, required this.name, required this.id});
+  _Home({
+    required this.pfp,
+    required this.users,
+    required this.name,
+    required this.id,
+  });
 
   _Home.fromJson(Map<String, Object?> json, String id)
       : this(
@@ -175,4 +193,5 @@ class _Home {
       'name': name,
     };
   }
+  
 }

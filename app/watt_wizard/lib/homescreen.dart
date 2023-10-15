@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,35 @@ class _HomeScreenState extends State<HomeScreen> {
   late User user;
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;
   late StreamSubscription<BluetoothAdapterState> _adapterStateStateSubscription;
+
+  late String userInput;
+
+  Future<void> _showDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button to close dialog
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Enter Data'),
+          content: TextField(
+            onChanged: (value) {
+              userInput = value;
+            },
+            decoration: InputDecoration(hintText: "Enter something"),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Submit'),
+              onPressed: () {
+                makeNewHome(userInput);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -59,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return DefaultTabController(
       initialIndex: 0,
-      length: 3,
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -71,7 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     await FirebaseAuth.instance.signOut();
                   },
           ),
-          title: const Text("Home Screen"),
+          title: Text('Welcome, ${user.displayName ?? ""}'),
+  
           actions: <Widget>[
             IconButton(
                 onPressed: () {
@@ -84,72 +113,59 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           bottom: const TabBar(
             tabs: <Widget>[
+              // Tab(
+              //   icon: Icon(Icons.cloud_outlined),
+              // ),
               Tab(
-                icon: Icon(Icons.cloud_outlined),
+                icon: Icon(Icons.person),
               ),
               Tab(
-                icon: Icon(Icons.beach_access_sharp),
-              ),
-              Tab(
-                icon: Icon(Icons.brightness_5_sharp),
+                icon: Icon(Icons.home),
               ),
             ],
           ),
         ),
         body: TabBarView(
           children: [
+            // Center(
+            //   child: Column(
+            //     mainAxisAlignment: MainAxisAlignment.center,
+            //     children: <Widget>[
+            //       Text(
+            //         "Welcome ${user.displayName}",
+            //       ),
+            //       _adapterState == BluetoothAdapterState.on
+            //           ? const Spacer()
+            //           : FilledButton(
+            //               onPressed: () async {
+            //                 if (Platform.isAndroid) {
+            //                   await FlutterBluePlus.turnOn();
+            //                 } else {}
+            //               },
+            //               child: const Text("Turn Bluetooth On"),
+            //             ),
+            //     ],
+            //   ),
+            // ),
+            Center(
+              child: SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: const UserList(),
+              ),
+            ),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text(
-                    "Welcome ${user.displayName}",
+                  SizedBox(
+                    width: sizedBoxWidth,
+                    height: sizedBoxHeight - 45,
+                    child: const HomeList(),
                   ),
-                  _adapterState == BluetoothAdapterState.on
-                      ? const Spacer()
-                      : FilledButton(
-                          onPressed: () async {
-                            if (Platform.isAndroid) {
-                              await FlutterBluePlus.turnOn();
-                            } else {}
-                          },
-                          child: const Text("Turn Bluetooth On"),
-                        ),
-                  // Center(
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: <Widget>[
-                  //       SizedBox(
-                  //         width: sizedBoxWidth,
-                  //         height: sizedBoxHeight,
-                  //         child: UserList(),
-                  //       )
-                  //     ],
-                  //   ),
-                  // ),
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: sizedBoxWidth,
-                    height: sizedBoxHeight,
-                    child: UserList(),
-                  )
-                ],
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: sizedBoxWidth,
-                    height: sizedBoxHeight,
-                    child: HomeList(),
+                  ElevatedButton(
+                    onPressed: _showDialog,
+                    child: const Text("Add Home"),
                   )
                 ],
               ),

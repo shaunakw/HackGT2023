@@ -74,35 +74,17 @@ class _UserItem extends StatelessWidget {
 
   /// Returns the movie poster.
   Widget get pfp {
-    return SizedBox(
-      width: 100,
-      child: Image.network(user.pfp),
-    );
-  }
-
-  /// Returns user details.
-  Widget get details {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          name,
-          power,
-        ],
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Image.network(
+        user.pfp,
+        width: 60,
+        fit: BoxFit.cover,
       ),
     );
   }
 
-  // Return the user name.
-  Widget get name {
-    return Text(
-      user.name,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-    );
-  }
-
-  Widget get power {
+  int get power {
     int power = 0;
     for (var i in user.devices) {
       Map<String, Object?> device = i as Map<String, Object?>;
@@ -114,23 +96,15 @@ class _UserItem extends StatelessWidget {
       }
     }
 
-    return Text(
-      'Active Power Consumption: ${power.toString()}',
-      style: const TextStyle(fontSize: 12),
-    );
+    return power;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4, top: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          pfp,
-          Flexible(child: details),
-        ],
-      ),
+    return ListTile(
+      leading: pfp,
+      title: Text(user.name),
+      subtitle: Text("Active Power Consumption: $power"),
     );
   }
 }
