@@ -131,13 +131,13 @@ class _HomeItem extends StatelessWidget {
   }
 
   // Return the home name.
-  Future<Widget> get name async {
+  Widget get name {
     return Text(
-      '${home.name}',
+      home.name,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
-        color: home.id == userHome ? Color(0xFF9370db) : Color(0xfff5f5f5),
+        color: Color(0xfff5f5f5),
       ),
     );
   }

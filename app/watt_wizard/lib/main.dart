@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff0abde3),
         ),
-        scaffoldBackgroundColor: const Color(0xff0abde3),
+        scaffoldBackgroundColor: const Color(0xfff5f5f5),
         useMaterial3: true,
       ),
       home: _landingPage(),

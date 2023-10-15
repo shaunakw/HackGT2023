@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -149,15 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
             //   ),
             // ),
             Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    width: sizedBoxWidth,
-                    height: sizedBoxHeight,
-                    child: const UserList(),
-                  )
-                ],
+              child: SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: const UserList(),
               ),
             ),
             Center(
@@ -166,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   SizedBox(
                     width: sizedBoxWidth,
-                    height: sizedBoxHeight - 42,
+                    height: sizedBoxHeight - 45,
                     child: const HomeList(),
                   ),
                   ElevatedButton(
