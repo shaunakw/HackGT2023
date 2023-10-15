@@ -1,3 +1,7 @@
+> Designed by the Psychedelic Psychologists
+>
+> HackGT 2023 @ GT
+
 # WATT WIZARD
 
 Watt-Wizards is your go-to platform for sustainable living made fun and rewarding. This innovative app hooks into your smart home or breaker panel to track your energy and water usage in real-time. But that's not all! Challenge your friends in friendly competitions to see who can be the most resource-efficient. Earn points, unlock rewards, and level up your eco-conscious lifestyle, all while reducing your carbon footprint. Watt-Wizards turns everyday sustainability into an engaging game, making it easier than ever to save the planet—and your wallet."
