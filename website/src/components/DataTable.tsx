@@ -17,15 +17,15 @@ function DataTable(props: IProps) {
   return (
     <>
       <Box display="flex" justifyContent="space-between" px={2} py={1}>
-        <Typography color="white">{props.title}</Typography>
-        <Typography color="white">Power Consumption (W)</Typography>
+        <Typography>{props.title}</Typography>
+        <Typography>Power Consumption (W)</Typography>
       </Box>
       {data.map((d, i) => (
         <DataTableEntry
           key={i}
           name={d[0]}
           values={d[1]}
-          color={i % 2 === 1 ? "#253544" : "#2a3b4c"}
+          color={i % 2 === 0 ? "#e6e6e6" : "whitesmoke"}
         />
       ))}
     </>

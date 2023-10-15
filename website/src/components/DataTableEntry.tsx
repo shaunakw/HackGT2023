@@ -27,10 +27,8 @@ function DataTableEntry(props: IProps) {
         }}
         onClick={() => setOpen(true)}
       >
-        <Typography color="white">{props.name}</Typography>
-        <Typography color="white">
-          {props.values[props.values.length - 1]}
-        </Typography>
+        <Typography>{props.name}</Typography>
+        <Typography>{props.values[props.values.length - 1]}</Typography>
       </Box>
       <Modal open={open} onClose={() => setOpen(false)}>
         <Card
@@ -40,7 +38,7 @@ function DataTableEntry(props: IProps) {
             top: "50%",
             left: "50%",
             transform: "translate(-50%,-50%)",
-            backgroundColor: "#253544",
+            backgroundColor: "whitesmoke",
             borderRadius: 10,
             width: 600,
             padding: 16,
@@ -51,11 +49,9 @@ function DataTableEntry(props: IProps) {
             justifyContent="space-between"
             alignItems="center"
           >
-            <Typography variant="h5" color="white">
-              {props.name}
-            </Typography>
+            <Typography variant="h5">{props.name}</Typography>
             <IconButton onClick={() => setOpen(false)}>
-              <CloseIcon style={{ color: "white" }} />
+              <CloseIcon />
             </IconButton>
           </Box>
           <LineChart
@@ -63,14 +59,6 @@ function DataTableEntry(props: IProps) {
             series={[{ data: props.values }]}
             width={600 - 2 * 16}
             height={400}
-            sx={{
-              "& .MuiChartsAxis-root line": {
-                stroke: "white",
-              },
-              "& .MuiChartsAxis-root tspan": {
-                fill: "white",
-              },
-            }}
           />
         </Card>
       </Modal>

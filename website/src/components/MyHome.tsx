@@ -43,20 +43,20 @@ function MyHome(props: IProps) {
   return props.userData.home ? (
     !loading ? (
       <>
-        <Typography variant="h5" color="white" p={2}>
+        <Typography variant="h5" p={2}>
           {name}
         </Typography>
         <DataTable title="Name" data={data} />
       </>
     ) : (
-      <CircularProgress sx={{ color: "white" }} />
+      <CircularProgress />
     )
   ) : (
     <>
-      <Typography variant="h5" color="white" p={2}>
+      <Typography variant="h5" p={2}>
         No Home
       </Typography>
-      <Typography color="white" px={2} py={1}>
+      <Typography px={2} py={1}>
         Join a home to see how you stack up against your housemates!
       </Typography>
     </>

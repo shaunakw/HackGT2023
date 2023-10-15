@@ -39,7 +39,7 @@ function App() {
         flexDirection="column"
         gap={2}
         sx={{
-          background: loading || user ? "#2c3e50" : undefined,
+          background: loading || user ? "#0abde3" : undefined,
           position: "relative",
           overflow: "hidden",
         }}
@@ -93,7 +93,7 @@ function App() {
                 Compete with your friends to save the most energy!
               </Typography>
               <Button
-                style={{ color: "lightgrey" }}
+                style={{ color: "white" }}
                 variant="outlined"
                 onClick={() =>
                   window.open(

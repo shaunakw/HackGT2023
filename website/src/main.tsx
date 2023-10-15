@@ -4,7 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider, createTheme } from "@mui/material";
 
-const theme = createTheme({ typography: { fontFamily: "Jost" } });
+const theme = createTheme({ typography: { fontFamily: "Gabarito" } });
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

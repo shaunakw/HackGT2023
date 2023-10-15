@@ -17,7 +17,7 @@ function Devices(props: IProps) {
 
   return (
     <>
-      <Typography variant="h5" color="white" p={2}>
+      <Typography variant="h5" p={2}>
         My Devices
       </Typography>
       <DataTable title="Device Name" data={data} />
