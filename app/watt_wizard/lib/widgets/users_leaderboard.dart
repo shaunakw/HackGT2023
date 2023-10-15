@@ -75,7 +75,7 @@ class _UserItem extends StatelessWidget {
   /// Returns the movie poster.
   Widget get pfp {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
+      borderRadius: BorderRadius.circular(15),
       child: Image.network(
         user.pfp,
         width: 100,
@@ -103,7 +103,7 @@ class _UserItem extends StatelessWidget {
   Widget get name {
     return Text(
       user.name,
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Color(0xfff5f5f5)),
     );
   }
 
@@ -121,14 +121,14 @@ class _UserItem extends StatelessWidget {
 
     return Text(
       'Active Power Consumption: ${power.toString()}',
-      style: const TextStyle(fontSize: 12),
+      style: const TextStyle(fontSize: 12, color: Color(0xfff5f5f5)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4, top: 4),
+      padding: const EdgeInsets.only(bottom: 4, top: 4, left: 8, right: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

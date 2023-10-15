@@ -101,6 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
           ),
           title: Text('Welcome, ${user.displayName ?? ""}'),
+  
           actions: <Widget>[
             IconButton(
                 onPressed: () {

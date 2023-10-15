@@ -107,7 +107,7 @@ class _HomeItem extends StatelessWidget {
   /// Returns the movie poster.
   Widget get pfp {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
+      borderRadius: BorderRadius.circular(15),
       child: Image.network(
         home.pfp,
         width: 100,
@@ -131,10 +131,14 @@ class _HomeItem extends StatelessWidget {
   }
 
   // Return the home name.
-  Widget get name {
+  Future<Widget> get name async {
     return Text(
       '${home.name}',
-      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: home.id == userHome ? Color(0xFF9370db) : Color(0xfff5f5f5),
+      ),
     );
   }
 
@@ -150,7 +154,7 @@ class _HomeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4, top: 4),
+      padding: const EdgeInsets.only(bottom: 4, top: 4, left: 8, right: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -166,7 +170,12 @@ class _HomeItem extends StatelessWidget {
 
 @immutable
 class _Home {
-  _Home({required this.pfp, required this.users, required this.name, required this.id});
+  _Home({
+    required this.pfp,
+    required this.users,
+    required this.name,
+    required this.id,
+  });
 
   _Home.fromJson(Map<String, Object?> json, String id)
       : this(
@@ -188,4 +197,5 @@ class _Home {
       'name': name,
     };
   }
+  
 }
