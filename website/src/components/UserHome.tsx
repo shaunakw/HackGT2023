@@ -33,13 +33,7 @@ function UserHome(props: IProps) {
               borderRadius: 10,
             }}
           >
-<<<<<<< Updated upstream
-            <Typography variant="h5" p={2}>
-              Leaderboard
-            </Typography>
-=======
             <Leaderboard />
->>>>>>> Stashed changes
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>
