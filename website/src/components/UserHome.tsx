@@ -4,6 +4,7 @@ import { auth } from "../firebase";
 import { UserData } from "../types";
 import Devices from "./Devices";
 import MyHome from "./MyHome";
+import Leaderboard from "./Leaderboard";
 
 interface IProps {
   userData: UserData;
@@ -32,9 +33,13 @@ function UserHome(props: IProps) {
               borderRadius: 10,
             }}
           >
+<<<<<<< Updated upstream
             <Typography variant="h5" p={2}>
               Leaderboard
             </Typography>
+=======
+            <Leaderboard />
+>>>>>>> Stashed changes
           </Card>
         </Grid>
         <Grid item p={1.5} xs={4}>
