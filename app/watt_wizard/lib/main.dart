@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Watt Wizard',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff9370db)),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xff0abde3),
+        ),
+        scaffoldBackgroundColor: const Color(0xff0abde3),
         useMaterial3: true,
       ),
       home: _landingPage(),

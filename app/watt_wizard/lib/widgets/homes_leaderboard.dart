@@ -24,6 +24,14 @@ final _homesRef = _db.collection('homes').withConverter<_Home>(
       toFirestore: (home, _) => home.toJson(),
     );
 
+void makeNewHome(String name) async {
+  await _db.collection('homes').add({
+    'name': name.substring(0, 30 > name.length ? name.length : 50),
+    'pfp': "https://housing.gatech.edu/sites/default/files/styles/building_hero_/public/2022-04/building-at-night.jpeg.jpg",
+    'users': []
+  });
+}
+
 /// Holds all example app films
 class HomeList extends StatefulWidget {
   const HomeList({Key? key}) : super(key: key);
@@ -98,9 +106,14 @@ class _HomeItem extends StatelessWidget {
 
   /// Returns the movie poster.
   Widget get pfp {
-    return SizedBox(
-      width: 100,
-      child: Image.network(home.pfp),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: Image.network(
+        home.pfp,
+        width: 100,
+        height: 100,
+        fit: BoxFit.cover,
+      ),
     );
   }
 
@@ -139,8 +152,8 @@ class _HomeItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4, top: 4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           pfp,
           Flexible(child: details),

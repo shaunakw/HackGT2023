@@ -74,9 +74,14 @@ class _UserItem extends StatelessWidget {
 
   /// Returns the movie poster.
   Widget get pfp {
-    return SizedBox(
-      width: 100,
-      child: Image.network(user.pfp),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: Image.network(
+        user.pfp,
+        width: 100,
+        height: 100,
+        fit: BoxFit.cover,
+      ),
     );
   }
 
