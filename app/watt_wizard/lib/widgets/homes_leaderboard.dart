@@ -110,8 +110,8 @@ class _HomeItem extends StatelessWidget {
       borderRadius: BorderRadius.circular(15),
       child: Image.network(
         home.pfp,
-        width: 100,
-        height: 100,
+        width: 50,
+        height: 50,
         fit: BoxFit.cover,
       ),
     );
@@ -154,15 +154,11 @@ class _HomeItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4, top: 4, left: 8, right: 8),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          pfp,
-          Flexible(child: details),
-          updateHomeButton(context, home),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: pfp,
+        title: Text(home.name),
+        trailing: updateHomeButton(context, home)
       ),
     );
   }
