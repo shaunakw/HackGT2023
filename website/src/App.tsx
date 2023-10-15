@@ -58,7 +58,8 @@ function App() {
                 py={2}
               >
                 <Button
-                  style={{ color: "white" }}
+                  variant="outlined"
+                  style={{ color: "white", border: "1px solid white" }}
                   onClick={() => signInWithRedirect(auth, githubProvider)}
                 >
                   Sign In
@@ -93,7 +94,7 @@ function App() {
                 Compete with your friends to save the most energy!
               </Typography>
               <Button
-                style={{ color: "white" }}
+                style={{ color: "white", border: "1px solid white" }}
                 variant="outlined"
                 onClick={() =>
                   window.open(

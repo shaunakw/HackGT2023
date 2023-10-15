@@ -18,7 +18,11 @@ function UserHome(props: IProps) {
           Watt Wizard
         </Typography>
         <Box px={4} py={2}>
-          <Button style={{ color: "white" }} onClick={() => signOut(auth)}>
+          <Button
+            variant="outlined"
+            style={{ color: "white", border: "1px solid white" }}
+            onClick={() => signOut(auth)}
+          >
             Sign Out
           </Button>
         </Box>
